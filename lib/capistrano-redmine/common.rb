@@ -14,7 +14,9 @@ module Capistrano
       end
     end
 
-    def Redmine.update(site, token, options, projects, from_status, to_status, logger)
+    def Redmine.update(site, token, options, projects, from_status, to_status, logger=nil)
+      logger ||= Logger.new(STDOUT)
+
       Redmine.configure(site, token, options)
       projects = [projects] unless projects.is_a? Array
 
@@ -65,28 +67,4 @@ module Capistrano
       end
     end
   end
-end
-
-
-configuration = Capistrano::Configuration.respond_to?(:instance) ?
-  Capistrano::Configuration.instance(:must_exist) :
-  Capistrano.configuration(:must_exist)
-
-configuration.load do
-
-  namespace :redmine do
-    desc "Update Redmine issues statuses."
-    task :update, :roles => :app, :except => { :no_release => true } do
-      Capistrano::Redmine.update(
-        redmine_site,
-        redmine_token,
-        exists?('redmine_options') ? redmine_options : {},
-        redmine_projects,
-        redmine_from_status,
-        redmine_to_status,
-        logger
-      )
-    end
-  end
-
 end

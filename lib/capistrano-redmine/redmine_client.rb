@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+require 'capistrano-redmine'
 require 'net/http'
 require 'json'
 

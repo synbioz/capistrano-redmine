@@ -1,5 +1,8 @@
 # -*- encoding: utf-8 -*-
-require File.expand_path('../lib/capistrano-redmine/version', __FILE__)
+lib = File.expand_path('../lib', __FILE__)
+$:.unshift(lib) unless $:.include?(lib)
+
+require "capistrano-redmine/version"
 
 Gem::Specification.new do |gem|
   gem.authors       = ["Aleksey Kurepin"]
